@@ -16,7 +16,9 @@
     "open_in_tab": true
   },
   "browser_action": {
-    "default_icon": "icons/blocktherich-on-96.png"
+    "default_icon": "icons/blocktherich-on-96.png",
+    "default_title": "Block The Rich",
+    "default_popup": "popup/options.html"
   },
   "background": {
     "scripts": [
