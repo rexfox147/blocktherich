@@ -31,12 +31,11 @@ function findRichNode(node) {
     }
     if (node.hasChildNodes()) {
         node.childNodes.forEach(element => {
-            if (node.nodeName = "A") {
-                if (isRich(node)) {
-                    processNode(node);
-                    return;
-                }
+            if (isRich(node)) {
+                processNode(node);
+                return;
             }
+
             findRichNode(element);
         })
     } else if (node.nodeType === Node.TEXT_NODE) {
@@ -58,6 +57,11 @@ function findRichNode(node) {
                 return;
             }
         }
+        if (node.title != undefined && node.title != '') {
+            if (isRich(node.title)) {
+                blurNode(node);
+            }
+        }
     }
 }
 
@@ -65,7 +69,7 @@ function isRich(element) {
     let hasMatch = false;
     Object.keys(blackList).forEach(person => {
         blackList[person].forEach(alias => {
-            if (new RegExp("(^|(\\.|,|\\s|\“)+)" + alias + "((,|\\.|\\s|s|\\’s|\\?|\\'|\“)+|$)", "ig").test(element)) {
+            if (new RegExp("(^|(\\.|,|\\s|\“)+)" + alias + "((,|\\.|\\s|s|\\’s|\\?|\\'|\“|:|;)+|$)", "ig").test(element)) {
                 hasMatch = true;
                 return;
             }
