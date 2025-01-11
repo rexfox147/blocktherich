@@ -23,7 +23,7 @@ h1 {
 button {
   /* Background */
   background:linear-gradient(45deg,#3B82F6,#2563EB);
-  
+
   /* Typography */
   color: #FFFFFF;
   font-family: Arial;
@@ -31,22 +31,25 @@ button {
   text-transform: none;
   letter-spacing: 0px;
   font-weight:400;
-  
+
   /* Sizing and Border */
-  padding: auto;
   margin: auto;
   border-radius: 8px;
   border: 0px solid #000000;
-  
+
   /* Box Shadow */
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  
+
   /* Text Shadow */
   text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  
+
   /* Additional Styles */
   cursor: pointer;
   transition: all 0.2s;
+}
+
+label {
+  color: #FFFFFF;
 }
 
 button:hover {
@@ -57,3 +60,57 @@ button:active {
   transform: scale(0.98);
 }
 
+
+.entry {
+  margin-bottom: 20px;
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.tag-container {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.tag-div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.tag {
+  display: flex;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 5px 10px;
+  align-items: flex-start;
+}
+
+.tag span {
+  margin-right: 10px;
+}
+
+.tag button.delete-tag {
+  border: none;
+  background: transparent;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+input.tag-input {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin-top: 10px;
+  outline: none;
+  display: flex;
+  align-items: flex-start;
+}
