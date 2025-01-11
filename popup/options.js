@@ -31,6 +31,7 @@ function addEntry(entry = { name: "", list: [""], toggle: false }, index = null)
 
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
+    deleteButton.className = "button"
     deleteButton.onclick = () => entryDiv.remove();
 
     entryDiv.appendChild(nameInput);
