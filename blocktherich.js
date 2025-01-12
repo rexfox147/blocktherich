@@ -1,5 +1,7 @@
 let blacklist = [];
 
+console.time("Startup Execution Time");
+
 browser.storage.local.get("status")
     .then((result) => {
         let statusValue = result.status;
@@ -9,12 +11,13 @@ browser.storage.local.get("status")
                 .then(({ configEntries = [] }) => {
                     console.log("Status: ", statusValue);
                     console.log("Loaded " + configEntries.length + " entries");
+                    console.timeEnd("Startup Execution Time");
 
                     blacklist = configEntries;
                     createObserver();
-                    if (isRich(document.body.textContent)) {
-                        findRichNode(document.body);
-                    }
+                    console.time("Hiding Execution Time");
+                    findRichNode(document.body);
+                    console.timeEnd("Hiding Execution Time");
                 })
                 .catch((error) => {
                     console.error("Failed to load configEntries:", error);
