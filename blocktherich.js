@@ -1,29 +1,30 @@
-const blackList = {
-    ballmer: ["steve ballmer", "steven anthony ballmer"],
-    bezos: ["bezos", "jeff bezos"],
-    bloomberg: ["michael bloomberg", "michael rubens bloomberg"],
-    brin: ["sergey brin", "sergey mikhailovich brin"],
-    buffett: ["buffett", "warren buffett", "warren edward buffett"],
-    ellison: ["larry ellison", "lawrence joseph ellison"],
-    gates: ["bill gates", "william henry gates iii"],
-    kanye: ["kanye", "kanye west", "ye west", "kanye omari west"],
-    musk: ["musk", "elon musk", "elon reeve musk"],
-    page: ["larry page", "lawrence edward page"],
-    trump: ["trump", "donald trump", "donald j. trump", "donald john trump"],
-    zuck: ["zuck", "zuckerberg", "mark zuckerberg", "mark elliot zuckerberg"]
-}
+let blacklist = [];
 
 browser.storage.local.get("status")
     .then((result) => {
         let statusValue = result.status;
-        if (statusValue == null || statusValue == true) {
-            createObserver();
-            if (isRich(document.body.textContent)) {
-                findRichNode(document.body);
-            }
+        if (statusValue == null || statusValue === true) {
+            // Fetch configEntries asynchronously
+            browser.storage.local.get("configEntries")
+                .then(({ configEntries = [] }) => {
+                    console.log("Status: ", statusValue);
+                    console.log("Loaded " + configEntries.length + " entries");
+
+                    blacklist = configEntries;
+                    createObserver();
+                    if (isRich(document.body.textContent)) {
+                        findRichNode(document.body);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Failed to load configEntries:", error);
+                });
         }
-    }
-    );
+    })
+    .catch((error) => {
+        console.error("Failed to load status:", error);
+    });
+
 
 function findRichNode(node) {
     if (node.parentNode.hasAttribute("btr-rich-node")) {
@@ -67,8 +68,8 @@ function findRichNode(node) {
 
 function isRich(element) {
     let hasMatch = false;
-    Object.keys(blackList).forEach(person => {
-        blackList[person].forEach(alias => {
+    blacklist.forEach(entry => {
+        entry.list.forEach(alias => {
             if (new RegExp("(^|(\\.|,|\\s|\“)+)" + alias + "((,|\\.|\\s|s|\\’s|\\?|\\'|\“|:|;)+|$)", "ig").test(element)) {
                 hasMatch = true;
                 return;
@@ -81,8 +82,8 @@ function isRich(element) {
 function isRichUrl(url) {
     let hasMatch = false;
     let urlPath = url.split("?")[0].toLowerCase();
-    Object.keys(blackList).forEach(person => {
-        blackList[person].forEach(alias => {
+    blacklist.forEach(entry => {
+        entry.list.forEach(alias => {
             if (urlPath.includes(alias)) {
                 hasMatch = true;
                 return;
