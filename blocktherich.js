@@ -60,7 +60,7 @@ function findRichNode(node) {
         }
         if (node.title != undefined && node.title != '') {
             if (isRich(node.title)) {
-                blurNode(node);
+                processNode(node);
             }
         }
     }
