@@ -30,16 +30,11 @@ browser.storage.local.get("status")
 
 
 function findRichNode(node) {
-    if (node.parentNode.hasAttribute("btr-rich-node")) {
+    if (node.parentNode && node.parentNode.hasAttribute("btr-rich-node")) {
         return;
     }
     if (node.hasChildNodes()) {
         node.childNodes.forEach(element => {
-            if (isRich(node)) {
-                processNode(node);
-                return;
-            }
-
             findRichNode(element);
         })
     } else if (node.nodeType === Node.TEXT_NODE) {
