@@ -64,11 +64,17 @@ function findRichNode(node) {
     }
 }
 
+let cachedRegex = {};
+
 function isRich(element) {
     let hasMatch = false;
+
     blacklist.forEach(entry => {
         entry.list.forEach(alias => {
-            if (new RegExp("(^|(\\.|,|\\s|\“)+)" + alias + "((,|\\.|\\s|s|\\’s|\\?|\\'|\“|:|;)+|$)", "ig").test(element)) {
+            if (!cachedRegex[alias]) {
+                cachedRegex[alias] = new RegExp("(^|(\\.|,|\\s|\“)+)" + alias + "((,|\\.|\\s|s|\\’s|\\?|\\'|\“|:|;)+|$)", "ig");
+            }
+            if (cachedRegex[alias].test(element)) {
                 hasMatch = true;
                 return;
             }
