@@ -1,6 +1,8 @@
 const entriesContainer = document.getElementById("entries");
 const addEntryButton = document.getElementById("add-entry");
 const saveButton = document.getElementById("save");
+const statusIcon = document.getElementById("status");
+const refreshIcon = document.getElementById("refresh");
 
 // Load entries from storage
 async function loadEntries() {
@@ -112,8 +114,52 @@ async function saveEntries() {
     alert("Configuration saved!");
 }
 
+function checkExtensionStatus() {
+    (async () => {
+        const isEnabled = await isExtensionEnabled();
+        if (isEnabled) {
+            saveStatus(false);
+            browser.browserAction.setIcon({ path: browser.runtime.getURL("icons/blocktherich-off-96.png")});
+            statusIcon.src = browser.runtime.getURL("icons/blocktherich-off-48.png");
+            statusIcon.title = "Disabled"
+            //browser.tabs.reload();
+        } else {
+            saveStatus(true);
+            browser.browserAction.setIcon({ path: browser.runtime.getURL("icons/blocktherich-on-96.png")});
+            statusIcon.src = browser.runtime.getURL("icons/blocktherich-on-48.png");
+            statusIcon.title = "Enabled"
+            //browser.tabs.reload();
+        }
+    })();
+}
+
+async function isExtensionEnabled() {
+    let result = await browser.storage.local.get("status");
+    return result.status;
+}
+
+function saveStatus(value) {
+    browser.storage.local.set({ "status": value });
+}
+
+async function refresh(){
+    const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+
+    if (tabs.length > 0) {
+        const currentTab = tabs[0];
+        console.log("Reloading tab:", currentTab.id);
+
+        // Reload the current tab
+        await browser.tabs.reload(currentTab.id);
+    } else {
+        console.log("No active tab found to reload.");
+    }
+}
+
 addEntryButton.addEventListener("click", () => addEntry());
 saveButton.addEventListener("click", saveEntries);
+statusIcon.addEventListener("click", checkExtensionStatus);
+refreshIcon.addEventListener("click", refresh);
 
 // Load the entries on page load
 loadEntries();

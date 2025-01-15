@@ -1,7 +1,7 @@
 html,
 body {
-  width: 500px;
-  height: 500px;
+  /*width: 500px;
+  height: 500px;*/
   margin: 0; /* Space from this element (entire page) and others*/
   padding: 5px 15px; /*space from content and border*/
   background-color: #2b2a33;
@@ -113,4 +113,10 @@ input.tag-input {
   outline: none;
   display: flex;
   align-items: flex-start;
+}
+
+.hoverable:hover{
+  background-color: grey;
+  opacity: 0.8;
+  border-radius: 10px;
 }

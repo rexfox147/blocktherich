@@ -7,7 +7,28 @@
     <title>Extension Configuration</title>
 </head>
 <body>
-<h1>Extension Configuration</h1>
+<div style="display: flex; align-content: space-between; align-items:center;margin-bottom: 5px;">
+    <h1 style="margin: 0;">Extension Configuration</h1>
+    <div style="display: flex; align-items: center;">
+        <img
+                style="margin-left: 20px;"
+                class="hoverable"
+                title="Enabled"
+                src="../icons/blocktherich-on-48.png"
+                alt="Enable/Disable"
+                id="status">
+        <img
+                style="margin-left: 20px;"
+                width="48"
+                height="48"
+                class="hoverable"
+                title="Refresh"
+                src="../icons/refresh.png"
+                alt="Refresh"
+                id="refresh">
+    </div>
+</div>
+
 <div id="entries"></div>
 <button id="add-entry" class="button">Add Entry</button>
 <button id="save" class="button">Save</button>

@@ -6,6 +6,9 @@
   "icons": {
     "96": "icons/blocktherich-on-96.png"
   },
+  "web_accessible_resources": [
+    "icons/*"
+  ],
   "permissions": [
     "activeTab",
     "https://*/*",
